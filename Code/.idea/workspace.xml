@@ -12,6 +12,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="ProjectId" id="24umqOA7NMEhr6QrZNxe4M9ovSp" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -54,6 +55,7 @@
       <option name="presentableId" value="Default" />
       <updated>1644489037717</updated>
       <workItem from="1644489038921" duration="1260000" />
+      <workItem from="1644490555027" duration="317000" />
     </task>
     <servers />
   </component>
