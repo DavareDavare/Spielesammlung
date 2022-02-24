@@ -8,6 +8,7 @@ import javafx.scene.layout.GridPane;
 public class HelloController {
     @FXML
     private GridPane grid;
+    char[][] field = new char [8][8];
     public void initialize()
     {
         int z=0;
@@ -15,10 +16,12 @@ public class HelloController {
         {
             for(int j=0; j<10; j++)
             {
+                field[i][j] = '*';
+                System.out.print(field[i][j] + " ");
                 z++;
-
                 grid.add(createButton(z), i, j);
             }
+            System.out.println();
         }
     }
 
