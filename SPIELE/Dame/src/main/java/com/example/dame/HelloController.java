@@ -14,7 +14,7 @@ public class HelloController{
     {
         fill();
         place();
-        //play();
+        play();
     }
 
     public void fill()
@@ -124,18 +124,49 @@ public class HelloController{
     public void play()
     {
         Scanner scanner = new Scanner(System.in);
-        String s = scanner.next();
-
+        int x;
+        char y;
+        int x2;
+        char y2;
+        output();
         do {
-            output();
             System.out.println("\n--------------------------");
-            cout << "\nGeben sie einen X-Wert zum Abschiessen ein (1-10): ";
-            cin >> x;
-            cout << "\nGeben sie einen Y-Wert zum Abschiessen ein (A-J): ";
-            cin >> y;
-            cout << "\n--------------------------" << endl;
-        } while (x < 0 || x > 10 || y > 'K' || y < 'A');
+            System.out.println("Geben sie den X-Wert eines Steines zum Bewegen ein (1-8): ");
+            x = Integer.parseInt(scanner.next());
+            System.out.println("Geben sie den Y-Wert eines Steines zum Bewegen ein (A-H): ");
+            y = scanner.next().charAt(0);
+            System.out.println("--------------------------");
+            if(x < 0 || x > 8 || y > 'H' || y < 'A' || field[x][(int)y-'A'] != '*')
+            {
+                System.out.print("Ups... Da ist etwas schiefgelaufen...");
+            }
+        } while (x < 0 || x > 8 || y > 'H' || y < 'A' || field[x][(int)y-'A'] != '*');
+        System.out.println(Integer.toString(x) + y);
+        do {
+            System.out.println("\n--------------------------");
+            if(x !=1 && x!=8)
+            {
+                System.out.println("Geben sie den X-Wert ein wohin der Stein bewegt werden soll (" + (x-1) + "/" + (x+1) + "): ");
+            }
+            else if(x==1)
+            {
+                System.out.println("Geben sie den X-Wert ein wohin der Stein bewegt werden soll (" + (x+1) + "): ");
+            }
+            else if(x==8)
+            {
+                System.out.println("Geben sie den X-Wert ein wohin der Stein bewegt werden soll (" + (x-1) + "): ");
+            }
 
+            x2 = Integer.parseInt(scanner.next());
+            System.out.println("Geben sie den Y-Wert ein wohin der Stein bewegt werden soll (" + (char)(y+1) + "): ");
+            y2 = scanner.next().charAt(0);
+            System.out.println("--------------------------");
+            if(x2!=x+1 || y2!=y+1 || field[x][(int)y-'A'] != '*')
+            {
+                System.out.print("Ups... Da ist etwas schiefgelaufen...");
+            }
+        } while (x < 0 || x > 8 || y > 'H' || y < 'A' || field[x][(int)y-'A'] == '*');
+        System.out.println(Integer.toString(x) + y);
     }
 
 }
