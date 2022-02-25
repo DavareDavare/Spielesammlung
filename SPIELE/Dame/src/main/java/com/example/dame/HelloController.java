@@ -14,7 +14,6 @@ public class HelloController{
     {
         fill();
         place();
-        output();
         //play();
     }
 
@@ -126,6 +125,16 @@ public class HelloController{
     {
         Scanner scanner = new Scanner(System.in);
         String s = scanner.next();
+
+        do {
+            output();
+            System.out.println("\n--------------------------");
+            cout << "\nGeben sie einen X-Wert zum Abschiessen ein (1-10): ";
+            cin >> x;
+            cout << "\nGeben sie einen Y-Wert zum Abschiessen ein (A-J): ";
+            cin >> y;
+            cout << "\n--------------------------" << endl;
+        } while (x < 0 || x > 10 || y > 'K' || y < 'A');
 
     }
 
