@@ -3,6 +3,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 
+import java.util.Scanner;
+
 public class HelloController{
     @FXML
     private GridPane grid;
@@ -32,13 +34,36 @@ public class HelloController{
 
     public void output()
     {
+        System.out.println("    1   2   3   4   5   6   7   8");
+        System.out.println("  ---------------------------------");
         for(int i=0; i<8; i++)
         {
             for(int j=0; j<8; j++)
             {
-                System.out.print(field[i][j] + "   ");
+                String zeichen = Character.toString((char) i+65);
+                if(j==0)
+                {
+                    System.out.print(zeichen + " | " + field[i][j] + "   ");
+                }
+                else if (j == 7)
+                {
+                    System.out.print(field[i][j] + " ");
+                }
+                else
+                {
+                    System.out.print(field[i][j] + "   ");
+                }
+
             }
-            System.out.println("\n");
+            if(i==7)
+            {
+                System.out.println("|");
+                System.out.print("  ---------------------------------");
+            }
+            else
+            {
+                System.out.println("| \n  |                               |");
+            }
         }
     }
 
@@ -97,5 +122,11 @@ public class HelloController{
         return button;
     }
 
+    public void play()
+    {
+        Scanner scanner = new Scanner(System.in);
+        String s = scanner.next();
+
+    }
 
 }
