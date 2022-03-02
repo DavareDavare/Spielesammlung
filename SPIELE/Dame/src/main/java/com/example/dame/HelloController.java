@@ -9,13 +9,32 @@ public class HelloController{
     @FXML
     private GridPane grid;
     char[][] field = new char [8][8];
+    int x;
+    char y;
+    int x2;
+    char y2;
+    int spieler = 0;
+    char currPlayer;
 
     public void initialize()
     {
         fill();
         place();
-        play();
-        output();
+        do{
+            if(spieler==0)
+            {
+                currPlayer = 'X';
+                currPlayer++;
+            }
+            else if(spieler==1)
+            {
+                currPlayer = 'O';
+                currPlayer--;
+            }
+            play();
+            output();
+        }while(true);
+
     }
 
     public void fill()
@@ -34,7 +53,8 @@ public class HelloController{
 
     public void output()
     {
-        System.out.println("    1   2   3   4   5   6   7   8");
+        System.out.println();
+        System.out.println("    0   1   2   3   4   5   6   7");
         System.out.println("  ---------------------------------");
         for(int i=0; i<8; i++)
         {
@@ -124,11 +144,43 @@ public class HelloController{
 
     public void play()
     {
-        int x;
-        char y;
-        int x2;
-        char y2;
         output();
+        inputStart();
+        output();
+        inputGoal();
+
+        char zeichen = field[(int)y-'A'][x];
+        field[(int)y-'A'][x] = '*';
+        System.out.println(zeichen);
+        field[(int)y2-'A'][x2] = zeichen;
+        System.out.println(Integer.toString(x2) + ((int)y2-'A'));
+    }
+
+
+    public void inputStart()
+    {
+        Scanner scanner = new Scanner(System.in);
+        do {
+            System.out.println("\n--------------------------");
+            System.out.println("Geben sie den X-Wert eines Steines zum Bewegen ein (0-7): ");
+            x = Integer.parseInt(scanner.next());
+            System.out.println("Geben sie den Y-Wert eines Steines zum Bewegen ein (A-H): ");
+            y = scanner.next().charAt(0);
+            System.out.println("--------------------------");
+            if(x < 0 || x > 7 || y > 'H' || y < 'A' || field[x][(int)y-'A'] == '*' || field[x][(int)y-'A'] != currPlayer)
+            {
+                System.out.println(field[x][(int)y-'A']);
+                System.out.println(x + " " + ((int)y-'A'));
+                System.out.print("Ups... Da ist etwas schiefgelaufen...");
+            }
+
+        } while (x < 0 || x > 8 || y > 'H' || y < 'A' || field[x][(int)y-'A'] == '*' || field[x][(int)y-'A'] != currPlayer);
+        System.out.println(x + " " + ((int)y-'A'));
+    }
+
+    public void inputGoal()
+    {
+        Scanner scanner = new Scanner(System.in);
         do {
             System.out.println("\n--------------------------");
             if(x > 0 && x!=7)
@@ -141,7 +193,7 @@ public class HelloController{
             }
             else if(x==7)
             {
-                System.out.println("Geben sie den X-Wert ein wohin der Stein bewegt werden soll (" + (x-1) + "): ");
+                System.out.println("Geben sie den X-Wert ein wohin der Stein bewegt werden soll (" + (x) + "): ");
             }
 
             x2 = Integer.parseInt(scanner.next());
@@ -150,37 +202,10 @@ public class HelloController{
             System.out.println("--------------------------");
             if(x2!=x+1 && x2!=x-1 || y2!=y+1 || field[x2][(int)y2-'A'] != '*')
             {
+                System.out.println(x2 + " " + ((int)y2-'A'));
                 System.out.print("Ups... Da ist etwas schiefgelaufen...");
             }
         } while (x2 != x+1 && x2 != x-1 || y2 != y+1 );
-        System.out.println(x2 + " " + ((int)y2-'A'));
-        char zeichen = field[x][(int)y-'A'];
-        field[x][(int)y-64] = '*';
-        field[x2][(int)y2-64] = zeichen;
-        System.out.println(Integer.toString(x2) + ((int)y2-'A'));
-    }
-
-
-    public int inputx()
-    {
-        Scanner scanner = new Scanner(System.in);
-        int x;
-        int y;
-        do {
-            System.out.println("\n--------------------------");
-            System.out.println("Geben sie den X-Wert eines Steines zum Bewegen ein (1-8): ");
-            x = Integer.parseInt(scanner.next());
-            System.out.println("Geben sie den Y-Wert eines Steines zum Bewegen ein (A-H): ");
-            y = scanner.next().charAt(0);
-            System.out.println("--------------------------");
-            if(x < 0 || x > 8 || y > 'H' || y < 'A' || field[x][(int)y-'A'] != '*')
-            {
-                System.out.print("Ups... Da ist etwas schiefgelaufen...");
-            }
-
-        } while (x < 0 || x > 8 || y > 'H' || y < 'A' || field[x][(int)y-'A'] != '*');
-        x--;
-        System.out.println(x + " " + ((int)y-'A'));
     }
 
 }
