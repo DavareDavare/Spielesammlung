@@ -6,6 +6,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
 import java.util.Random;
+import java.util.Scanner;
 
 public class HelloController {
 
@@ -21,6 +22,7 @@ public class HelloController {
         int Bhouse=4;
         int Chouse=4;
         int Dhouse=4;
+        Scanner scanner=new Scanner(System.in);
 
 
     public void initialize(){
@@ -28,6 +30,7 @@ public class HelloController {
         house();
         end();
         out();
+        draw();
         draw();
     }
 
@@ -131,6 +134,9 @@ public class HelloController {
     }
 
     public void rollDice(){
+        String s;
+        System.out.println("Drücke irgendeine Taste zum Würfeln!");
+        s=scanner.next();
         do {
             zz = random.nextInt(7);
         }while(zz==0);
@@ -140,12 +146,13 @@ public class HelloController {
 
     public void draw(){
         int a=0;
+        int zeahlerA=0;
 
         if(Ahouse==4){
             do {
                 rollDice();
                 a++;
-            }while (zz!=6&&a<3);
+            }while (zz!=6&&a<10);
 
             if(zz==6){
                 for(int i=0; i<11; i++) {
@@ -160,12 +167,64 @@ public class HelloController {
                 }
                 out();
                 a=0;
+                Ahouse--;
+                zeahlerA=0;
             }
             else{
                 System.out.println("KEIN 6");
                 out();
                 a=0;
+                zeahlerA=999;
             }
+        }
+        else{
+            int test=0;
+            do {
+                rollDice();
+                int moving = zz;
+
+                if (zeahlerA == 0) {
+
+                    if (moving < 4) {
+                        feld[4][moving] = 'A';
+                        feld[4][0] = '+';
+                        zeahlerA = zeahlerA + moving;
+                    } else {
+                        moving = moving - 4;
+                        feld[4-moving][4] = 'A';
+                        feld[4][0] = '+';
+                        zeahlerA = zeahlerA + moving+4;
+                    }
+                } else if (zeahlerA > 0 && zeahlerA <= 4) {
+
+                    if (zeahlerA + moving <= 4) {
+                        feld[4][zeahlerA + moving] = 'A';
+                        feld[4][zeahlerA] = '+';
+                        zeahlerA = zeahlerA + moving;
+                    } else if (zeahlerA+moving > 4 &&zeahlerA+moving<=8) {
+                        moving = moving - 4 + zeahlerA;
+                        feld[4-moving][4] = 'A';
+                        feld[4][zeahlerA] = '+';
+                        zeahlerA = zeahlerA + moving;
+                    }
+                    else if(zeahlerA+moving>8&&zeahlerA+moving<=10){
+
+                    }
+                }
+                else if(zeahlerA>4&&zeahlerA<=8){
+                    if (zeahlerA + moving <= 8) {
+                        feld[4-moving-(zeahlerA-4)][4] = 'A';
+                        feld[4-(zeahlerA-4)][4] = '+';
+                        zeahlerA = zeahlerA + moving;
+                    }
+                    else{
+                        System.out.println("zahd mi ned");
+                    }
+                }
+                out();
+
+                test++;
+            }while(test<10);
         }
     }
 
