@@ -15,7 +15,6 @@ public class HelloController{
     char y2;
     int spieler = 0;
     char currPlayer;
-    char currPlayer2;
 
     public void initialize()
     {
@@ -25,12 +24,10 @@ public class HelloController{
             if(spieler==0)
             {
                 currPlayer = 'x';
-                spieler++;
             }
             else if(spieler==1)
             {
                 currPlayer = 'o';
-                spieler--;
             }
             play();
         }while(true);
@@ -85,7 +82,7 @@ public class HelloController{
                 System.out.println("| \n  |                               |");
             }
         }
-        System.out.print("Aktueller Spieler: " + currPlayer);
+        System.out.println("Aktueller Spieler: " + currPlayer);
     }
 
     public void place()
@@ -145,6 +142,7 @@ public class HelloController{
 
     public void play()
     {
+        checkop();
         output();
         inputStart();
         output();
@@ -155,6 +153,14 @@ public class HelloController{
         System.out.println(zeichen);
         field[(int)y2-'A'][x2] = zeichen;
         System.out.println(Integer.toString(x2) + ((int)y2-'A'));
+        if(spieler==0)
+        {
+            spieler++;
+        }
+        else if(spieler==1)
+        {
+            spieler--;
+        }
     }
 
 
@@ -168,14 +174,14 @@ public class HelloController{
             System.out.println("Geben sie den Y-Wert eines Steines zum Bewegen ein (A-H): ");
             y = scanner.next().charAt(0);
             System.out.println("--------------------------");
-            if(x <= 0 || x >= 7 || y > 'H' || y < 'A' || field[(int)y-'A'][x] == '*' || field[(int)y-'A'][x] != currPlayer)
+            if(x < 0 || x > 8 || y > 'H' || y < 'A' || field[(int)y-'A'][x] == '*' || field[(int)y-'A'][x] != currPlayer && field[(int)y-'A'][x] != currPlayer+32)
             {
-                System.out.println(field[x][(int)y-'A']);
-                System.out.println(x + " " + ((int)y-'A'));
+                System.out.println(field[(int)y-'A'][x]);
+                System.out.println(((int)y-'A') + " " + x);
                 System.out.print("Ups... Da ist etwas schiefgelaufen...");
             }
 
-        } while (x < 0 || x > 8 || y > 'H' || y < 'A' || field[(int)y-'A'][x] == '*' || field[(int)y-'A'][x] != currPlayer);
+        } while (x < 0 || x > 8 || y > 'H' || y < 'A' || field[(int)y-'A'][x] == '*' || field[(int)y-'A'][x] != currPlayer && field[(int)y-'A'][x] != currPlayer+32);
         System.out.println(x + " " + ((int)y-'A'));
     }
 
@@ -206,53 +212,46 @@ public class HelloController{
             {
                 System.out.println("Geben sie den Y-Wert ein wohin der Stein bewegt werden soll (" + (char)(y-1) + "): ");
             }
+            else
+            {
+                if(y==0)
+            {
+                System.out.println("Geben sie den X-Wert ein wohin der Stein bewegt werden soll (" + (y+1) + "): ");
+            }
+                else if(y==7)
+            {
+                System.out.println("Geben sie den X-Wert ein wohin der Stein bewegt werden soll (" + (y-1) + "): ");
+            }
+                else
+                {
+                    System.out.println("Geben sie den Y-Wert ein wohin der Stein bewegt werden soll (" + (char)(y-1) + "/" + (char)(y+1) + "): ");
+                }
+            }
 
             y2 = scanner.next().charAt(0);
             System.out.println("--------------------------");
-            if(x2!=x+1 && x2!=x-1 || y2!=y+1 || field[x2][(int)y2-'A'] != '*')
+            if(x2!=x+1 && x2!=x-1 || spieler==0 && y2!=y+1 || spieler==1 && y2!=y-1)
             {
                 System.out.println(x2 + " " + ((int)y2-'A'));
                 System.out.print("Ups... Da ist etwas schiefgelaufen...");
             }
-        } while (x2 != x+1 && x2 != x-1 || y2 != y+1 );
+        } while(x2!=x+1 && x2!=x-1 || spieler==0 && y2!=y+1 || spieler==1 && y2!=y-1);
     }
 
-    public boolean possible(int x, int y)
+    public void checkop()
     {
-        if(y==0)
+        for(int i=0; i<8; i++)
         {
-            if(field[x-1][y+1] != currPlayer && field[x+1][y+1] != currPlayer)
+            if(field[0][i] == 'o')
             {
-                return true;
+                field[0][i] = 'O';
             }
-            else
+
+            if(field[7][i] == 'x')
             {
-                return false;
-            }
-        }
-        else if(y==7)
-        {
-            if(field[x-1][y+1] != currPlayer && field[x+1][y+1] != currPlayer)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        else
-        {
-            if(field[x-1][y+1] != currPlayer && field[x+1][y+1] != currPlayer)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
+                field[7][i] = 'X';
             }
         }
 
     }
-
 }
