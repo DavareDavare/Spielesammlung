@@ -23,16 +23,13 @@ public class HelloController{
         do{
             if(spieler==0)
             {
-                currPlayer = 'X';
-                currPlayer++;
+                currPlayer = 'x';
             }
             else if(spieler==1)
             {
-                currPlayer = 'O';
-                currPlayer--;
+                currPlayer = 'o';
             }
             play();
-            output();
         }while(true);
 
     }
@@ -78,13 +75,14 @@ public class HelloController{
             if(i==7)
             {
                 System.out.println("|");
-                System.out.print("  ---------------------------------");
+                System.out.println("  ---------------------------------");
             }
             else
             {
                 System.out.println("| \n  |                               |");
             }
         }
+        System.out.println("Aktueller Spieler: " + currPlayer);
     }
 
     public void place()
@@ -99,12 +97,12 @@ public class HelloController{
                 {
                     if(h%2 == 0)
                     {
-                        field[j][h] = 'X';
+                        field[j][h] = 'x';
                     }
                 } else {
                     if(h%2 == 1)
                     {
-                        field[j][h] = 'X';
+                        field[j][h] = 'x';
                     }
                 }
                 } else if ( j>4)
@@ -113,12 +111,12 @@ public class HelloController{
                     {
                         if(h%2 == 0)
                         {
-                            field[j][h] = 'O';
+                            field[j][h] = 'o';
                         }
                     } else {
                         if(h%2 == 1)
                         {
-                            field[j][h] = 'O';
+                            field[j][h] = 'o';
                         }
                     }
                 }
@@ -144,6 +142,7 @@ public class HelloController{
 
     public void play()
     {
+        checkop();
         output();
         inputStart();
         output();
@@ -154,6 +153,14 @@ public class HelloController{
         System.out.println(zeichen);
         field[(int)y2-'A'][x2] = zeichen;
         System.out.println(Integer.toString(x2) + ((int)y2-'A'));
+        if(spieler==0)
+        {
+            spieler++;
+        }
+        else if(spieler==1)
+        {
+            spieler--;
+        }
     }
 
 
@@ -167,14 +174,14 @@ public class HelloController{
             System.out.println("Geben sie den Y-Wert eines Steines zum Bewegen ein (A-H): ");
             y = scanner.next().charAt(0);
             System.out.println("--------------------------");
-            if(x < 0 || x > 7 || y > 'H' || y < 'A' || field[x][(int)y-'A'] == '*' || field[x][(int)y-'A'] != currPlayer)
+            if(x < 0 || x > 8 || y > 'H' || y < 'A' || field[(int)y-'A'][x] == '*' || field[(int)y-'A'][x] != currPlayer && field[(int)y-'A'][x] != currPlayer+32)
             {
-                System.out.println(field[x][(int)y-'A']);
-                System.out.println(x + " " + ((int)y-'A'));
+                System.out.println(field[(int)y-'A'][x]);
+                System.out.println(((int)y-'A') + " " + x);
                 System.out.print("Ups... Da ist etwas schiefgelaufen...");
             }
 
-        } while (x < 0 || x > 8 || y > 'H' || y < 'A' || field[x][(int)y-'A'] == '*' || field[x][(int)y-'A'] != currPlayer);
+        } while (x < 0 || x > 8 || y > 'H' || y < 'A' || field[(int)y-'A'][x] == '*' || field[(int)y-'A'][x] != currPlayer && field[(int)y-'A'][x] != currPlayer+32);
         System.out.println(x + " " + ((int)y-'A'));
     }
 
@@ -197,15 +204,54 @@ public class HelloController{
             }
 
             x2 = Integer.parseInt(scanner.next());
-            System.out.println("Geben sie den Y-Wert ein wohin der Stein bewegt werden soll (" + (char)(y+1) + "): ");
+            if(currPlayer=='x')
+            {
+                System.out.println("Geben sie den Y-Wert ein wohin der Stein bewegt werden soll (" + (char)(y+1) + "): ");
+            }
+            else if(currPlayer=='o')
+            {
+                System.out.println("Geben sie den Y-Wert ein wohin der Stein bewegt werden soll (" + (char)(y-1) + "): ");
+            }
+            else
+            {
+                if(y==0)
+            {
+                System.out.println("Geben sie den X-Wert ein wohin der Stein bewegt werden soll (" + (y+1) + "): ");
+            }
+                else if(y==7)
+            {
+                System.out.println("Geben sie den X-Wert ein wohin der Stein bewegt werden soll (" + (y-1) + "): ");
+            }
+                else
+                {
+                    System.out.println("Geben sie den Y-Wert ein wohin der Stein bewegt werden soll (" + (char)(y-1) + "/" + (char)(y+1) + "): ");
+                }
+            }
+
             y2 = scanner.next().charAt(0);
             System.out.println("--------------------------");
-            if(x2!=x+1 && x2!=x-1 || y2!=y+1 || field[x2][(int)y2-'A'] != '*')
+            if(x2!=x+1 && x2!=x-1 || spieler==0 && y2!=y+1 || spieler==1 && y2!=y-1)
             {
                 System.out.println(x2 + " " + ((int)y2-'A'));
                 System.out.print("Ups... Da ist etwas schiefgelaufen...");
             }
-        } while (x2 != x+1 && x2 != x-1 || y2 != y+1 );
+        } while(x2!=x+1 && x2!=x-1 || spieler==0 && y2!=y+1 || spieler==1 && y2!=y-1);
     }
 
+    public void checkop()
+    {
+        for(int i=0; i<8; i++)
+        {
+            if(field[0][i] == 'o')
+            {
+                field[0][i] = 'O';
+            }
+
+            if(field[7][i] == 'x')
+            {
+                field[7][i] = 'X';
+            }
+        }
+
+    }
 }
