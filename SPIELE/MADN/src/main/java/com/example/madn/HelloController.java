@@ -208,6 +208,16 @@ public class HelloController {
                         zeahlerA = zeahlerA + moving;
                     }
                     else if(zeahlerA+moving>8&&zeahlerA+moving<=10){
+                        if(zeahlerA+moving==9){
+                            feld[0][5]='A';
+                            feld[4][zeahlerA]='+';
+                            zeahlerA = zeahlerA + moving;
+                        }
+                        else if(zeahlerA+moving==10){
+                            feld[0][6]='A';
+                            feld[4][zeahlerA]='+';
+                            zeahlerA = zeahlerA + moving;
+                        }
 
                     }
                 }
@@ -217,9 +227,25 @@ public class HelloController {
                         feld[4-(zeahlerA-4)][4] = '+';
                         zeahlerA = zeahlerA + moving;
                     }
-                    else{
-                        System.out.println("zahd mi ned");
+                    else if(zeahlerA+moving>8&&zeahlerA+moving<=10){
+                        if(zeahlerA+moving==9){
+                            feld[0][5]='A';
+                            feld[4-(zeahlerA-4)][4]='+';
+                            zeahlerA = zeahlerA + moving;
+                        }
+                        else if(zeahlerA+moving==10){
+                            feld[0][6]='A';
+                            feld[4-(zeahlerA-4)][4]='+';
+                            zeahlerA = zeahlerA + moving;
+                        }
+
                     }
+                    else if(zeahlerA+moving>10&&zeahlerA+moving<=14){
+                        feld[zeahlerA-8+moving-2][6]='A';
+                        feld[4-(zeahlerA-4)][4]='+';
+                        zeahlerA = zeahlerA + moving;
+                    }
+
                 }
                 out();
 
