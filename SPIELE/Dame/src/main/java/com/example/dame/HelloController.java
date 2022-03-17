@@ -13,6 +13,7 @@ public class HelloController{
     char y;
     int x2;
     char y2;
+    char feldhintergrund = '-';
     int spieler = 0;
     char currPlayer;
 
@@ -41,7 +42,7 @@ public class HelloController{
         {
             for(int j=0; j<8; j++)
             {
-                field[i][j] = '*';
+                field[i][j] = '-';
                 z++;
                 grid.add(createButton(z), j, i);
             }
@@ -146,7 +147,15 @@ public class HelloController{
         output();
         inputStart();
         output();
-        inputGoal();
+        if(field[(int)y-'A'][x] == 'x' || field[(int)y-'A'][x] == 'o')
+        {
+            inputGoaln();
+        }
+        else
+        {
+            inputGoals();
+        }
+
 
         char zeichen = field[(int)y-'A'][x];
         field[(int)y-'A'][x] = '*';
@@ -174,18 +183,18 @@ public class HelloController{
             System.out.println("Geben sie den Y-Wert eines Steines zum Bewegen ein (A-H): ");
             y = scanner.next().charAt(0);
             System.out.println("--------------------------");
-            if(x < 0 || x > 8 || y > 'H' || y < 'A' || field[(int)y-'A'][x] == '*' || field[(int)y-'A'][x] != currPlayer && field[(int)y-'A'][x] != currPlayer+32)
+            if(x < 0 || x > 8 || y > 'H' || y < 'A' || field[(int)y-'A'][x] == '*' || field[(int)y-'A'][x] != currPlayer && field[(int)y-'A'][x] != (char)(currPlayer-32))
             {
                 System.out.println(field[(int)y-'A'][x]);
                 System.out.println(((int)y-'A') + " " + x);
                 System.out.print("Ups... Da ist etwas schiefgelaufen...");
             }
 
-        } while (x < 0 || x > 8 || y > 'H' || y < 'A' || field[(int)y-'A'][x] == '*' || field[(int)y-'A'][x] != currPlayer && field[(int)y-'A'][x] != currPlayer+32);
+        } while (x < 0 || x > 8 || y > 'H' || y < 'A' || field[(int)y-'A'][x] == '*' || field[(int)y-'A'][x] != currPlayer && field[(int)y-'A'][x] != (char)(currPlayer-32));
         System.out.println(x + " " + ((int)y-'A'));
     }
 
-    public void inputGoal()
+    public void inputGoaln()
     {
         Scanner scanner = new Scanner(System.in);
         do {
@@ -212,21 +221,6 @@ public class HelloController{
             {
                 System.out.println("Geben sie den Y-Wert ein wohin der Stein bewegt werden soll (" + (char)(y-1) + "): ");
             }
-            else
-            {
-                if(y==0)
-            {
-                System.out.println("Geben sie den X-Wert ein wohin der Stein bewegt werden soll (" + (y+1) + "): ");
-            }
-                else if(y==7)
-            {
-                System.out.println("Geben sie den X-Wert ein wohin der Stein bewegt werden soll (" + (y-1) + "): ");
-            }
-                else
-                {
-                    System.out.println("Geben sie den Y-Wert ein wohin der Stein bewegt werden soll (" + (char)(y-1) + "/" + (char)(y+1) + "): ");
-                }
-            }
 
             y2 = scanner.next().charAt(0);
             System.out.println("--------------------------");
@@ -236,6 +230,50 @@ public class HelloController{
                 System.out.print("Ups... Da ist etwas schiefgelaufen...");
             }
         } while(x2!=x+1 && x2!=x-1 || spieler==0 && y2!=y+1 || spieler==1 && y2!=y-1);
+    }
+
+    public void inputGoals()
+    {
+        Scanner scanner = new Scanner(System.in);
+        do {
+            System.out.println("\n--------------------------");
+            if(x > 0 && x!=7)
+            {
+                System.out.println("Geben sie den X-Wert ein wohin der Stein bewegt werden soll (" + (x-1) + "/" + (x+1) + "): ");
+            }
+            else if(x==0)
+            {
+                System.out.println("Geben sie den X-Wert ein wohin der Stein bewegt werden soll (" + (x+1) + "): ");
+            }
+            else if(x==7)
+            {
+                System.out.println("Geben sie den X-Wert ein wohin der Stein bewegt werden soll (" + (x) + "): ");
+            }
+
+            x2 = Integer.parseInt(scanner.next());
+
+                if(y=='A')
+                {
+                    System.out.println("Geben sie den Y-Wert ein wohin der Stein bewegt werden soll (" + (char)(y+1) + "): ");
+                }
+                else if(y=='H')
+                {
+                    System.out.println("Geben sie den Y-Wert ein wohin der Stein bewegt werden soll (" + (char)(y-1) + "): ");
+                }
+                else if(y<'H' && y>'A')
+                {
+                    System.out.println("Geben sie den Y-Wert ein wohin der Stein bewegt werden soll (" + (char)(y-1) + "/" + (char)(y+1) + "): ");
+                }
+
+
+            y2 = scanner.next().charAt(0);
+            System.out.println("--------------------------");
+            if(x2!=x+1 && x2!=x-1 ||y2!=y+1 && y2!=y-1 || x2 <0 || x2 > 7 || y2 < 0 || y2 > 7)
+            {
+                System.out.println(x2 + " " + ((int)y2-'A'));
+                System.out.print("Ups... Da ist etwas schiefgelaufen...");
+            }
+        } while(x2!=x+1 && x2!=x-1 ||y2!=y+1 && y2!=y-1 || x2 <0 || x2 > 7 || y2 < 0 || y2 > 7);
     }
 
     public void checkop()
