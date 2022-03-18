@@ -13,9 +13,12 @@ public class HelloController{
     char y;
     int x2;
     char y2;
-    char feldhintergrund = '-';
+    char feldhintergrund = ' ';
     int spieler = 0;
     char currPlayer;
+    char[] steine = {'e','b'};
+    int anz1 = 0;
+    int anz2 = 0;
 
     public void initialize()
     {
@@ -24,11 +27,11 @@ public class HelloController{
         do{
             if(spieler==0)
             {
-                currPlayer = 'x';
+                currPlayer = steine[0];
             }
             else if(spieler==1)
             {
-                currPlayer = 'o';
+                currPlayer = steine[1];
             }
             play();
         }while(true);
@@ -42,7 +45,7 @@ public class HelloController{
         {
             for(int j=0; j<8; j++)
             {
-                field[i][j] = '-';
+                field[i][j] = feldhintergrund;
                 z++;
                 grid.add(createButton(z), j, i);
             }
@@ -98,12 +101,12 @@ public class HelloController{
                 {
                     if(h%2 == 0)
                     {
-                        field[j][h] = 'x';
+                        field[j][h] = steine[0];
                     }
                 } else {
                     if(h%2 == 1)
                     {
-                        field[j][h] = 'x';
+                        field[j][h] = steine[0];
                     }
                 }
                 } else if ( j>4)
@@ -112,12 +115,12 @@ public class HelloController{
                     {
                         if(h%2 == 0)
                         {
-                            field[j][h] = 'o';
+                            field[j][h] = steine[1];
                         }
                     } else {
                         if(h%2 == 1)
                         {
-                            field[j][h] = 'o';
+                            field[j][h] = steine[1];
                         }
                     }
                 }
@@ -147,7 +150,7 @@ public class HelloController{
         output();
         inputStart();
         output();
-        if(field[(int)y-'A'][x] == 'x' || field[(int)y-'A'][x] == 'o')
+        if(field[(int)y-'A'][x] == steine[0] || field[(int)y-'A'][x] == steine[1])
         {
             inputGoaln();
         }
@@ -155,10 +158,8 @@ public class HelloController{
         {
             inputGoals();
         }
-
-
         char zeichen = field[(int)y-'A'][x];
-        field[(int)y-'A'][x] = '*';
+        field[(int)y-'A'][x] = feldhintergrund;
         System.out.println(zeichen);
         field[(int)y2-'A'][x2] = zeichen;
         System.out.println(Integer.toString(x2) + ((int)y2-'A'));
@@ -183,14 +184,14 @@ public class HelloController{
             System.out.println("Geben sie den Y-Wert eines Steines zum Bewegen ein (A-H): ");
             y = scanner.next().charAt(0);
             System.out.println("--------------------------");
-            if(x < 0 || x > 8 || y > 'H' || y < 'A' || field[(int)y-'A'][x] == '*' || field[(int)y-'A'][x] != currPlayer && field[(int)y-'A'][x] != (char)(currPlayer-32))
+            if(x < 0 || x > 8 || y > 'H' || y < 'A' || field[(int)y-'A'][x] == feldhintergrund || field[(int)y-'A'][x] != currPlayer && field[(int)y-'A'][x] != (char)(currPlayer-32))
             {
                 System.out.println(field[(int)y-'A'][x]);
                 System.out.println(((int)y-'A') + " " + x);
                 System.out.print("Ups... Da ist etwas schiefgelaufen...");
             }
 
-        } while (x < 0 || x > 8 || y > 'H' || y < 'A' || field[(int)y-'A'][x] == '*' || field[(int)y-'A'][x] != currPlayer && field[(int)y-'A'][x] != (char)(currPlayer-32));
+        } while (x < 0 || x > 8 || y > 'H' || y < 'A' || field[(int)y-'A'][x] == feldhintergrund || field[(int)y-'A'][x] != currPlayer && field[(int)y-'A'][x] != (char)(currPlayer-32));
         System.out.println(x + " " + ((int)y-'A'));
     }
 
@@ -213,11 +214,11 @@ public class HelloController{
             }
 
             x2 = Integer.parseInt(scanner.next());
-            if(currPlayer=='x')
+            if(currPlayer==steine[0])
             {
                 System.out.println("Geben sie den Y-Wert ein wohin der Stein bewegt werden soll (" + (char)(y+1) + "): ");
             }
-            else if(currPlayer=='o')
+            else if(currPlayer==steine[1])
             {
                 System.out.println("Geben sie den Y-Wert ein wohin der Stein bewegt werden soll (" + (char)(y-1) + "): ");
             }
@@ -268,28 +269,48 @@ public class HelloController{
 
             y2 = scanner.next().charAt(0);
             System.out.println("--------------------------");
-            if(x2!=x+1 && x2!=x-1 ||y2!=y+1 && y2!=y-1 || x2 <0 || x2 > 7 || y2 < 0 || y2 > 7)
+            if(x2!=x+1 && x2!=x-1 ||y2!=y+1 && y2!=y-1 || x2 <0 && x2 > 7 || y2 < 0 && y2 > 7)
             {
                 System.out.println(x2 + " " + ((int)y2-'A'));
                 System.out.print("Ups... Da ist etwas schiefgelaufen...");
             }
-        } while(x2!=x+1 && x2!=x-1 ||y2!=y+1 && y2!=y-1 || x2 <0 || x2 > 7 || y2 < 0 || y2 > 7);
+
+
+        } while(x2!=x+1 && x2!=x-1 ||y2!=y+1 && y2!=y-1 || x2 <0 && x2 > 7 || y2 < 0 && y2 > 7);
     }
 
     public void checkop()
     {
         for(int i=0; i<8; i++)
         {
-            if(field[0][i] == 'o')
+            if(field[0][i] == steine[1])
             {
-                field[0][i] = 'O';
+                field[0][i] = (char)(steine[1]-32);
             }
 
-            if(field[7][i] == 'x')
+            if(field[7][i] == steine[0])
             {
-                field[7][i] = 'X';
+                field[7][i] = (char)(steine[0]-32);
             }
         }
 
+    }
+
+    public void getAnzahl()
+    {
+        for(int i=0; i<8; i++)
+        {
+            for(int j=0; j<8; j++)
+            {
+                if(field[i][j] == steine[0] || field[i][j] == (char)(steine[0]-32))
+                {
+                    anz1++;
+                }
+                if(field[i][j] == steine[1] || field[i][j] == (char)(steine[1]-32))
+                {
+                    anz2++;
+                }
+            }
+        }
     }
 }
