@@ -34,8 +34,17 @@ public class HelloController{
                 currPlayer = steine[1];
             }
             play();
-        }while(true);
+            getAnzahl();
+        }while(anz1 != 0 || anz2 != 0);
 
+        if(anz1 == 0)
+        {
+            System.out.println("Spieler 1 hat gewonnen!");
+        }
+        else if(anz2 == 0)
+        {
+            System.out.println("Spieler 2 hat gewonnen!");
+        }
     }
 
     public void fill()
@@ -210,7 +219,7 @@ public class HelloController{
             }
             else if(x==7)
             {
-                System.out.println("Geben sie den X-Wert ein wohin der Stein bewegt werden soll (" + (x) + "): ");
+                System.out.println("Geben sie den X-Wert ein wohin der Stein bewegt werden soll (" + (x-1) + "): ");
             }
 
             x2 = Integer.parseInt(scanner.next());
@@ -248,7 +257,7 @@ public class HelloController{
             }
             else if(x==7)
             {
-                System.out.println("Geben sie den X-Wert ein wohin der Stein bewegt werden soll (" + (x) + "): ");
+                System.out.println("Geben sie den X-Wert ein wohin der Stein bewegt werden soll (" + (x-1) + "): ");
             }
 
             x2 = Integer.parseInt(scanner.next());
@@ -298,6 +307,8 @@ public class HelloController{
 
     public void getAnzahl()
     {
+        anz1 = 0;
+        anz2 = 0;
         for(int i=0; i<8; i++)
         {
             for(int j=0; j<8; j++)
@@ -312,5 +323,9 @@ public class HelloController{
                 }
             }
         }
+        System.out.println("Anzahl 1:");
+        System.out.println(anz1);
+        System.out.println("Anzahl 2:");
+        System.out.println(anz2);
     }
 }
