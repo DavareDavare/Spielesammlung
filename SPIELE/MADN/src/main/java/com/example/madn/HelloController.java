@@ -247,6 +247,54 @@ public class HelloController {
                     }
 
                 }
+                else if(zeahlerA==9){
+                    if(zeahlerA+moving==10){
+                        feld[0][6]='A';
+                        feld[0][5]='+';
+                        zeahlerA = zeahlerA + moving;
+                    }
+                    else if(zeahlerA+moving>10&&zeahlerA+moving<=14){
+                        feld[moving-1][6]='A';
+                        feld[0][5]='+';
+                        zeahlerA = zeahlerA + moving;
+                    }
+                    else if(zeahlerA+moving==15){
+                        feld[4][7]='A';
+                        feld[0][5]='+';
+                        zeahlerA = zeahlerA + moving;
+                    }
+
+
+                }
+                else if(zeahlerA>=10&&zeahlerA<14){
+                    if(zeahlerA+moving<=14){
+                        feld[moving][6]='A';
+                        feld[zeahlerA-10][6]='+';
+                        zeahlerA = zeahlerA+moving;
+                    }
+                    else if(zeahlerA+moving>14&&zeahlerA+moving<=18){
+                       feld[4][6+zeahlerA-14+moving]='A';
+                        feld[zeahlerA-10][6]='+';
+                        zeahlerA=zeahlerA+moving;
+                    }
+                    else if(zeahlerA+moving==19){
+                        feld[5][10]='A';
+                        feld[3][6]='+';
+                        zeahlerA=zeahlerA+moving;
+                    }
+
+
+
+
+
+                }
+
+
+
+
+
+
+
                 out();
 
                 test++;
