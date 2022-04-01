@@ -241,7 +241,7 @@ public class HelloController {
 
                     }
                     else if(zeahlerA+moving>10&&zeahlerA+moving<=14){
-                        feld[zeahlerA-8+moving-2][6]='A';
+                        feld[zeahlerA-8+(moving-2)][6]='A';
                         feld[4-(zeahlerA-4)][4]='+';
                         zeahlerA = zeahlerA + moving;
                     }
@@ -268,7 +268,7 @@ public class HelloController {
                 }
                 else if(zeahlerA>=10&&zeahlerA<14){
                     if(zeahlerA+moving<=14){
-                        feld[moving][6]='A';
+                        feld[zeahlerA-10+moving][6]='A';
                         feld[zeahlerA-10][6]='+';
                         zeahlerA = zeahlerA+moving;
                     }
@@ -282,12 +282,61 @@ public class HelloController {
                         feld[3][6]='+';
                         zeahlerA=zeahlerA+moving;
                     }
-
-
-
-
+                }
+                else if(zeahlerA>=14&&zeahlerA<=18){
+                    if(zeahlerA+moving<=18){
+                        feld[4][5+zeahlerA-13+moving]='A';
+                        feld[4][5+zeahlerA-13]='+';
+                        zeahlerA = zeahlerA+moving;
+                    }
+                    else if(zeahlerA+moving>=18&&zeahlerA+moving<=20){
+                        if(zeahlerA+moving==18){
+                            feld[10][4]='A';
+                        }
+                        else if(zeahlerA+moving==19){
+                            feld[5][10]='A';
+                        }
+                        else if(zeahlerA+moving==20){
+                            feld[6][10]='A';
+                        }
+                        feld[4][5+zeahlerA-13]='+';
+                        zeahlerA=zeahlerA+moving;
+                    }
+                    else if(zeahlerA+moving>20&&zeahlerA+moving<=24){
+                        feld[6][10-(zeahlerA-18+moving-2)]='A';
+                        feld[4][5+zeahlerA-13]='+';
+                        zeahlerA=zeahlerA+moving;
+                    }
 
                 }
+                else if(zeahlerA>18&&zeahlerA<=20){
+                     if(zeahlerA+moving==20){
+                        feld[6][10]='A';
+                        feld[5][10]='+';
+                         zeahlerA=zeahlerA+moving;
+                    }
+                     else if(zeahlerA+moving>20&&zeahlerA+moving<=24){
+                         feld[6][10-moving+(20-zeahlerA)]='A';
+                         feld[4+(zeahlerA-18)][10]='+';
+                         zeahlerA=zeahlerA+moving;
+                     }
+                     else if(zeahlerA+moving>24){
+                         feld[4+(moving-4)][6]='A';
+                         feld[4+(zeahlerA-18)][10]='+';
+                         zeahlerA=zeahlerA+moving;
+                     }
+                }
+                else if(zeahlerA>20&&zeahlerA<=24){
+                    if(zeahlerA+moving<=24){
+
+                    }else if(zeahlerA+moving>24&&zeahlerA+moving<=28){
+                        
+                    }
+                    else if(zeahlerA+moving>28){
+
+                    }
+                }
+
 
 
 
