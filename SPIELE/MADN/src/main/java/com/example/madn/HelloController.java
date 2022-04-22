@@ -70,7 +70,7 @@ public class HelloController {
                         feld[i][j] = 'A';
 
                     }
-                }
+                }/*
                 if(i==8||i==9){
                     if(j==1||j==2){
                         feld[i][j] = 'B';
@@ -82,10 +82,10 @@ public class HelloController {
                         feld[i][j] = 'D';
 
                     }
-                }
+                }*/
                 if(i==8||i==9){
                     if(j==8||j==9){
-                        feld[i][j] = 'C';
+                        feld[i][j] = 'B';
 
                     }
                 }
@@ -104,19 +104,19 @@ public class HelloController {
                 }
                 if(i==5){
                     if(j==6||j==7||j==8||j==9){
-                        feld[i][j] = 'c';
+                        feld[i][j] = 'b';
 
                     }
                 }
                 if(j==5){
                     if(i==1||i==2||i==3||i==4){
-                        feld[i][j] = 'd';
+                        feld[i][j] = ' ';
 
                     }
                 }
                 if(j==5){
                     if(i==6||i==7||i==8||i==9){
-                        feld[i][j] = 'c';
+                        feld[i][j] = ' ';
 
                     }
                 }
@@ -328,26 +328,154 @@ public class HelloController {
                 }
                 else if(zeahlerA>20&&zeahlerA<=24){
                     if(zeahlerA+moving<=24){
+                        feld[6][10-(zeahlerA-20+moving)]='A';
+                        feld[6][10-(zeahlerA-20)]='+';
+                        zeahlerA = zeahlerA+moving;
 
                     }else if(zeahlerA+moving>24&&zeahlerA+moving<=28){
-                        
+                        feld[6+(moving-(24-zeahlerA))][6]='A';
+                        feld[6][10-(zeahlerA-20)]='+';
+                        zeahlerA = zeahlerA+moving;
                     }
                     else if(zeahlerA+moving>28){
+                        if(zeahlerA+moving==29){
+                            feld[10][5]='A';
+                            feld[6][10-(zeahlerA-20)]='+';
+                            zeahlerA = zeahlerA+moving;
+                        }
+                        else if(zeahlerA+moving==30){
+                            feld[10][4]='A';
+                            feld[6][10-(zeahlerA-20)]='+';
+                            zeahlerA = zeahlerA+moving;
+                        }
 
                     }
                 }
+                else if(zeahlerA>24&&zeahlerA<=28){
+                    if(zeahlerA+moving<=28){
+                        feld[10-(zeahlerA-20+moving)][6]='A';
+                        feld[6][6+(zeahlerA-24)]='+';
+                        zeahlerA = zeahlerA+moving;
+                    }
+                    else if(zeahlerA+moving==29){
+                        feld[10][5]='A';
+                        feld[6][6+(zeahlerA-24)]='+';
+                        zeahlerA = zeahlerA+moving;
+                    }
+                    else if(zeahlerA+moving>=30 && zeahlerA+moving<=34){
+                        feld[10-(moving-(30-zeahlerA))][4]='A';
+                        feld[6][6+(zeahlerA-24)]='+';
+                        zeahlerA = zeahlerA+moving;
+                    }
+                }
+                else if(zeahlerA==29||zeahlerA==30){
+                    if(zeahlerA+moving==30){
+                        feld[10][4]='A';
+                    }
+                    else if(zeahlerA+moving>30&&zeahlerA+moving<=34){
+                        if(zeahlerA==29){
+                            feld[10-(moving-(30-zeahlerA))][4]='A';
+                            feld[10][5]='+';
+                            zeahlerA = zeahlerA+moving;
+                        }
+                        else if(zeahlerA==30){
+                            feld[10-(moving-(30-zeahlerA))][4]='A';
+                            feld[10][4]='+';
+                            zeahlerA = zeahlerA+moving;
+                        }
+                    }
+                    else if(zeahlerA+moving==35){
+                        if(zeahlerA==29){
+                            feld[6][3]='A';
+                            feld[10][5]='+';
+                            zeahlerA = zeahlerA+moving;
+                        }
+                        else if(zeahlerA==30){
+                            feld[6][3]='A';
+                            feld[10][4]='+';
+                            zeahlerA = zeahlerA+moving;
+                        }
 
+                    }
+                    else if(zeahlerA+moving==36){
+                        if(zeahlerA==29){
+                            feld[6][2]='A';
+                            feld[10][5]='+';
+                            zeahlerA = zeahlerA+moving;
+                        }
+                        else if(zeahlerA==30){
+                            feld[6][2]='A';
+                            feld[10][4]='+';
+                            zeahlerA = zeahlerA+moving;
+                        }
 
+                    }
 
+                }
+                else if(zeahlerA>30&&zeahlerA<=34){
+                    if(zeahlerA+moving<=34){
+                        feld[10-(moving-(30-zeahlerA))][4]='A';
+                        feld[6+(34-zeahlerA)][4]='+';
+                        zeahlerA=zeahlerA+moving;
+                    }
+                    else if(zeahlerA+moving>34&&zeahlerA+moving<=38){
+                        feld[6][4-(moving-(34-zeahlerA))]='A';
+                        feld[6+(34-zeahlerA)][4]='+';
+                        zeahlerA=zeahlerA+moving;
+                    }
+                    else if(zeahlerA+moving==39){
+                        feld[5][0]='A';
+                        feld[6+(34-zeahlerA)][4]='+';
+                        zeahlerA=zeahlerA+moving;
+                    }
+                    else if(zeahlerA+moving>=40 && zeahlerA+moving<=43) {
+                        feld[1 + (zeahlerA + moving - 40)][5] = 'A';
+                        feld[4][6] = '+';
+                        zeahlerA = zeahlerA + moving;
+                    }
 
+                }
+                else if(zeahlerA>34&&zeahlerA<=38){
+                    if(zeahlerA+moving<=38){
+                        feld[6][4-(moving-(34-zeahlerA))]='A';
+                        feld[6][38-zeahlerA]='+';
+                        zeahlerA=zeahlerA+moving;
+                    }
+                    else if(zeahlerA+moving==39){
+                        feld[5][0]='A';
+                        feld[6][38-zeahlerA]='+';
+                        zeahlerA=zeahlerA+moving;
+                    }
+                    else if(zeahlerA+moving>=40 && zeahlerA+moving<=43) {
+                        feld[5][moving-(39-zeahlerA)] = 'A';
+                        feld[6][38-zeahlerA]='+';
+                        zeahlerA = zeahlerA + moving;
+                    }
 
-
+                }
+                else if(zeahlerA==39){
+                    if(zeahlerA+moving>=40 && zeahlerA+moving<=43) {
+                        feld[5][moving] = 'A';
+                        feld[5][0] = '+';
+                        zeahlerA = zeahlerA + moving;
+                    }
+                }
+                else if(zeahlerA>=40&&zeahlerA<=43){
+                    if(zeahlerA+moving<=34){
+                        feld[5][zeahlerA-39+moving] = 'A';
+                        feld[5][zeahlerA-39] = '+';
+                        zeahlerA = zeahlerA + moving;
+                    }
+                    else{
+                        System.out.println("Runde ist aus");
+                    }
+                }
 
 
                 out();
 
                 test++;
-            }while(test<10);
+            }while(test<35);
         }
     }
 
