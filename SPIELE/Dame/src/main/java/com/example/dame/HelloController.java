@@ -1,27 +1,48 @@
 package com.example.dame;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 
 import java.util.Scanner;
 
 public class HelloController{
     @FXML
-    private GridPane grid;
+    private GridPane grid1;
+    @FXML
+    private GridPane grid2;
+    @FXML
+    private Button playbutton;
+    @FXML
+    private Pane playpane;
+    @FXML
+    private Rectangle r;
+    Button [][] btn = new Button[8][8];
+
     char[][] field = new char [8][8];
+    char[] steine = {'e','b'};
+    char feldhintergrund = '-';
+    Feld field1 = new Feld(feldhintergrund, steine);
+
     int x;
     char y;
     int x2;
     char y2;
-    char feldhintergrund = ' ';
+
+    int temp=0;
+
     int spieler = 0;
     char currPlayer;
-    char[] steine = {'e','b'};
+
     int anz1 = 0;
     int anz2 = 0;
 
     public void initialize()
-    {
+    {/*
         fill();
         place();
         do{
@@ -45,6 +66,14 @@ public class HelloController{
         {
             System.out.println("Spieler 2 hat gewonnen!");
         }
+        */
+        fill();
+        field1.fill();
+        field1.placePlayerStones();
+        fillText();
+        field1.output();
+
+
     }
 
     public void fill()
@@ -54,9 +83,8 @@ public class HelloController{
         {
             for(int j=0; j<8; j++)
             {
-                field[i][j] = feldhintergrund;
                 z++;
-                grid.add(createButton(z), j, i);
+                grid1.add(createButton(z), j, i);
             }
         }
     }
@@ -139,47 +167,126 @@ public class HelloController{
 
     }
 
+    public TextField createText(char c)
+    {
+        TextField t = new TextField(Character.toString(c));
+        t.setText(Character.toString(c));
+        t.setStyle("-fx-background-color: transparent;" +
+                "-fx-font-size: 20;" +
+                "-fx-font-weight: bold;" +
+                "-fx-text-fill: black;" +
+            "-fx-translate-x: 20px");
+        return t;
+    }
 
     public Button createButton(int z)
     {
         Button button = new Button(Integer.toString(z));
         button.setMaxSize(75, 75);
+        button.setDisable(false);
         button.setOpacity(0);
 
         button.setOnAction(e -> {
-            System.out.println("Button: " + Integer.toString(z));
+
+                field1.output();
+                play(button);
+                getAnzahl();
+                if(temp==0)
+                {
+                    temp=1;
+                }else
+                {
+                    temp=0;
+                }
+                field1.output();
+
         });
 
         return button;
     }
 
-    public void play()
+    public void setXY(Button button)
     {
-        checkop();
-        output();
-        inputStart();
-        output();
-        if(field[(int)y-'A'][x] == steine[0] || field[(int)y-'A'][x] == steine[1])
+        if((Integer.parseInt(button.getText()))%8==0)
         {
-            inputGoaln();
+            field1.y =(char)(((Integer.parseInt(button.getText())/8)+65)-1);
+            field1.x=7;
         }
         else
         {
-            inputGoals();
+            field1.y=(char)((Integer.parseInt(button.getText())/8)+65);
+            field1.x=(Integer.parseInt(button.getText())%8)-1;
         }
-        char zeichen = field[(int)y-'A'][x];
-        field[(int)y-'A'][x] = feldhintergrund;
-        System.out.println(zeichen);
-        field[(int)y2-'A'][x2] = zeichen;
-        System.out.println(Integer.toString(x2) + ((int)y2-'A'));
-        if(spieler==0)
+
+        System.out.println(field1.x + " " + field1.y);
+    }
+
+    public void setXY2(Button button)
+    {
+        if((Integer.parseInt(button.getText()))%8==0)
         {
-            spieler++;
+            field1.y2 =(char)(((Integer.parseInt(button.getText())/8)+65)-1);
+            field1.x2=7;
         }
-        else if(spieler==1)
+        else
         {
-            spieler--;
+            field1.y2=(char)((Integer.parseInt(button.getText())/8)+65);
+            field1.x2=(Integer.parseInt(button.getText())%8)-1;
         }
+
+        System.out.println(field1.x2 + " " + field1.y2);
+    }
+
+    public void play(Button button)
+    {
+        field1.checkOP();
+        if(temp==0)
+        {
+            setXY(button);
+            field1.fm();
+            System.out.println("test1");
+
+        }
+        if(temp == 1)
+        {
+            setXY2(button);
+            if(field1.IsViable())
+            if (field1.field[(int) field1.y - 'A'][field1.x] == field1.steine[0] || field1.field[(int) field1.y - 'A'][field1.x] == field1.steine[1]) {
+                if(field1.smn())
+                {
+                    System.out.println(field1.getX() + " " + (int)(field1.getY()-65));
+                    System.out.println(field1.field[field1.getX()][(field1.getY()-65)]);
+                    System.out.println(field1.getAt(field1.getX(), (field1.getY()-65)));
+                    char zeichen = field1.getAt(field1.getX(), (field1.getY()-65));
+                    System.out.println(zeichen);
+                    field1.setAt(field1.getX2(), (field1.getY2()-'A'), zeichen);
+                    field1.setAt(field1.getX(), (field1.getY()-'A'), field1.getFeldhintergrund());
+                    field1.output();
+                    fillText();
+                    field1.setCurrPlayer();
+                    field1.setSpieler();
+                }
+            } else {
+                if(field1.smo())
+                {
+                    System.out.println(field1.getX() + " " + (int)(field1.getY()-65));
+                    System.out.println(field1.field[field1.getX()][(field1.getY()-65)]);
+                    System.out.println(field1.getAt(field1.getX(), (field1.getY()-65)));
+                    char zeichen = field1.getAt(field1.getX(), (field1.getY()-65));
+                    System.out.println(zeichen);
+                    field1.setAt(field1.getX2(), (field1.getY2()-'A'), zeichen);
+                    field1.setAt(field1.getX(), (field1.getY()-'A'), field1.getFeldhintergrund());
+                    field1.output();
+                    fillText();
+                    field1.setCurrPlayer();
+                    field1.setSpieler();
+                }
+            }
+        }
+
+
+
+
     }
 
 
@@ -187,20 +294,25 @@ public class HelloController{
     {
         Scanner scanner = new Scanner(System.in);
         do {
+            System.out.println("Für einen Wert '9' eingeben zum Neuanfang.");
             System.out.println("\n--------------------------");
             System.out.println("Geben sie den X-Wert eines Steines zum Bewegen ein (0-7): ");
             x = Integer.parseInt(scanner.next());
+            if(x!=9)
+            {
             System.out.println("Geben sie den Y-Wert eines Steines zum Bewegen ein (A-H): ");
             y = scanner.next().charAt(0);
             System.out.println("--------------------------");
-            if(x < 0 || x > 8 || y > 'H' || y < 'A' || field[(int)y-'A'][x] == feldhintergrund || field[(int)y-'A'][x] != currPlayer && field[(int)y-'A'][x] != (char)(currPlayer-32))
-            {
-                System.out.println(field[(int)y-'A'][x]);
-                System.out.println(((int)y-'A') + " " + x);
-                System.out.print("Ups... Da ist etwas schiefgelaufen...");
-            }
 
-        } while (x < 0 || x > 8 || y > 'H' || y < 'A' || field[(int)y-'A'][x] == feldhintergrund || field[(int)y-'A'][x] != currPlayer && field[(int)y-'A'][x] != (char)(currPlayer-32));
+            if(y!=9) {
+                if (!IsViable() || !IsBackground() || !IsPlayer()) {
+                    System.out.println(field[(int) y - 'A'][x]);
+                    System.out.println(((int) y - 'A') + " " + x);
+                    System.out.print("Ups... Da ist etwas schiefgelaufen...");
+                }
+            }
+            }
+        } while (!IsViable() || !IsBackground() || !IsPlayer());
         System.out.println(x + " " + ((int)y-'A'));
     }
 
@@ -208,6 +320,7 @@ public class HelloController{
     {
         Scanner scanner = new Scanner(System.in);
         do {
+            System.out.println("Für einen Wert '9' eingeben zum Neuanfang.");
             System.out.println("\n--------------------------");
             if(x > 0 && x!=7)
             {
@@ -223,21 +336,23 @@ public class HelloController{
             }
 
             x2 = Integer.parseInt(scanner.next());
-            if(currPlayer==steine[0])
-            {
-                System.out.println("Geben sie den Y-Wert ein wohin der Stein bewegt werden soll (" + (char)(y+1) + "): ");
-            }
-            else if(currPlayer==steine[1])
-            {
-                System.out.println("Geben sie den Y-Wert ein wohin der Stein bewegt werden soll (" + (char)(y-1) + "): ");
-            }
+            if(x2!=9) {
+                if (currPlayer == steine[0]) {
+                    System.out.println("Geben sie den Y-Wert ein wohin der Stein bewegt werden soll (" + (char) (y + 1) + "): ");
+                } else if (currPlayer == steine[1]) {
+                    System.out.println("Geben sie den Y-Wert ein wohin der Stein bewegt werden soll (" + (char) (y - 1) + "): ");
+                }
 
-            y2 = scanner.next().charAt(0);
-            System.out.println("--------------------------");
-            if(x2!=x+1 && x2!=x-1 || spieler==0 && y2!=y+1 || spieler==1 && y2!=y-1)
-            {
-                System.out.println(x2 + " " + ((int)y2-'A'));
-                System.out.print("Ups... Da ist etwas schiefgelaufen...");
+                y2 = scanner.next().charAt(0);
+                System.out.println("--------------------------");
+                if(y2!='9')
+                {
+                    if (x2 != x + 1 && x2 != x - 1 || spieler == 0 && y2 != y + 1 || spieler == 1 && y2 != y - 1) {
+                        System.out.println(x2 + " " + ((int) y2 - 'A'));
+                        System.out.print("Ups... Da ist etwas schiefgelaufen...");
+                    }
+                }
+
             }
         } while(x2!=x+1 && x2!=x-1 || spieler==0 && y2!=y+1 || spieler==1 && y2!=y-1);
     }
@@ -309,6 +424,7 @@ public class HelloController{
     {
         anz1 = 0;
         anz2 = 0;
+        field = field1.getField();
         for(int i=0; i<8; i++)
         {
             for(int j=0; j<8; j++)
@@ -327,5 +443,75 @@ public class HelloController{
         System.out.println(anz1);
         System.out.println("Anzahl 2:");
         System.out.println(anz2);
+    }
+
+    public boolean IsViable()
+    {
+        return x > 0 || x < 8 || y < 'H' || y > 'A';
+    }
+
+    public boolean IsBackground()
+    {
+        return field[(int) y - 'A'][x] != feldhintergrund;
+    }
+
+    public boolean IsPlayer()
+    {
+        return field[(int) y - 'A'][x] == currPlayer || field[(int) y - 'A'][x] == (char) (currPlayer - 32);
+    }
+
+    public boolean IfStop()
+    {
+        return x == 9 || y == '9' || x2 == 9 || y2 == '9';
+    }
+
+    public boolean CanKill()
+    {
+        if(x==0 && y<6)
+        {
+            if(field[(int)y-'A'-1][x+1] != feldhintergrund && field[(int)y-'A'-2][x+2] == feldhintergrund)
+            {
+               return true;
+            }
+        }
+        else if(x==7 && y<6)
+        {
+            if(field[(int)y-'A'-1][x-1] != feldhintergrund && field[(int)y-'A'-2][x-2] == feldhintergrund)
+            {
+                return true;
+            }
+        }
+        else if(x>=1 && x<=6)
+        {
+
+        }
+
+        return true;
+    }
+@FXML
+    public void startGame(ActionEvent actionEvent) {
+        playbutton.setDisable(true);
+        playbutton.setOpacity(0);
+        playpane.setDisable(true);
+        playpane.setOpacity(0);
+        r.setDisable(true);
+        r.setOpacity(0);
+        field1.fill();
+        field1.placePlayerStones();
+        grid1.setDisable(false);
+    }
+
+    public void fillText()
+    {
+        grid2.getChildren().clear();
+        for(int i=0; i<8; i++)
+        {
+            for(int j=0; j<8; j++)
+            {
+                grid2.add(createText(field1.field[i][j]), j, i);
+                grid2.add(createText(field1.field[i][j]), j, i);
+                grid2.add(createText(field1.field[i][j]), j, i);
+            }
+        }
     }
 }
