@@ -14,6 +14,7 @@ public class FeldMaDn extends Feld{
     Random random = new Random();
     Spieler spieler1 = new Spieler('A', 0);
     Spieler spieler2 = new Spieler('B', 20);
+    boolean win = false;
 
 
     public FeldMaDn(char markM, char markH, char markE){
@@ -119,7 +120,19 @@ public class FeldMaDn extends Feld{
 
     //FUNKTIONEN
     public void begin(){
-        draw(spieler1);
+        int beginningPlayer = random.nextInt(100);
+
+        for(;win!=true; beginningPlayer++){
+            if(beginningPlayer%2==0){
+                System.out.println("Spieler A: ");
+                draw(spieler1);
+            }
+            else if(beginningPlayer%2==1){
+                System.out.println("Spieler B: ");
+                draw(spieler2);
+            }
+        }
+
     }
 
     public void rollDice(){
@@ -147,8 +160,8 @@ public class FeldMaDn extends Feld{
 
             if(zz==6){
                 switch(s.getStartPosition()){
-                    case 0: feld[4][0]=s.getPlayerInitial(); feld[2][2]=markMain; break;
-                    case 20: feld[6][10]=s.getPlayerInitial(); feld[8][8]=markMain; break;
+                    case 0: feld[4][0]=s.getPlayerInitial(); feld[2][2]=markMain; zeahlerA=0; break;
+                    case 20: feld[6][10]=s.getPlayerInitial(); feld[8][8]=markMain; zeahlerA=20; break;
 
                 }
                 outField();
@@ -160,48 +173,47 @@ public class FeldMaDn extends Feld{
                 System.out.println("KEIN 6");
                 outField();
                 a=0;
-                zeahlerA=999;
             }
         }
         else{
             int test=0;
-            do {
+
                 rollDice();
                 int moving = zz;
 
                 if (zeahlerA == 0) {
 
                     if (moving < 4) {
-                        feld[4][moving] = 'A';
-                        feld[4][0] = '+';
+                        feld[4][moving] = s.getPlayerInitial();
+                        feld[4][0] = markMain;
                         zeahlerA = zeahlerA + moving;
                     } else {
                         moving = moving - 4;
-                        feld[4-moving][4] = 'A';
-                        feld[4][0] = '+';
+                        feld[4-moving][4] = s.getPlayerInitial();
+                        feld[4][0] = markMain;
                         zeahlerA = zeahlerA + moving+4;
                     }
                 } else if (zeahlerA > 0 && zeahlerA <= 4) {
 
                     if (zeahlerA + moving <= 4) {
-                        feld[4][zeahlerA + moving] = 'A';
-                        feld[4][zeahlerA] = '+';
+                        feld[4][zeahlerA + moving] = s.getPlayerInitial();
+                        feld[4][zeahlerA] = markMain;
                         zeahlerA = zeahlerA + moving;
                     } else if (zeahlerA+moving > 4 &&zeahlerA+moving<=8) {
                         moving = moving - 4 + zeahlerA;
-                        feld[4-moving][4] = 'A';
-                        feld[4][zeahlerA] = '+';
+                        feld[4-moving][4] = s.getPlayerInitial();
+                        feld[4][zeahlerA] = markMain;
                         zeahlerA = zeahlerA + moving;
                     }
                     else if(zeahlerA+moving>8&&zeahlerA+moving<=10){
                         if(zeahlerA+moving==9){
-                            feld[0][5]='A';
-                            feld[4][zeahlerA]='+';
+                            feld[0][5]=s.getPlayerInitial();
+                            feld[4][zeahlerA]=markMain;
                             zeahlerA = zeahlerA + moving;
                         }
                         else if(zeahlerA+moving==10){
-                            feld[0][6]='A';
-                            feld[4][zeahlerA]='+';
+                            feld[0][6]=s.getPlayerInitial();
+                            feld[4][zeahlerA]=markMain;
                             zeahlerA = zeahlerA + moving;
                         }
 
@@ -209,44 +221,44 @@ public class FeldMaDn extends Feld{
                 }
                 else if(zeahlerA>4&&zeahlerA<=8){
                     if (zeahlerA + moving <= 8) {
-                        feld[4-moving-(zeahlerA-4)][4] = 'A';
-                        feld[4-(zeahlerA-4)][4] = '+';
+                        feld[4-moving-(zeahlerA-4)][4] = s.getPlayerInitial();
+                        feld[4-(zeahlerA-4)][4] = markMain;
                         zeahlerA = zeahlerA + moving;
                     }
                     else if(zeahlerA+moving>8&&zeahlerA+moving<=10){
                         if(zeahlerA+moving==9){
-                            feld[0][5]='A';
-                            feld[4-(zeahlerA-4)][4]='+';
+                            feld[0][5]=s.getPlayerInitial();
+                            feld[4-(zeahlerA-4)][4]=markMain;
                             zeahlerA = zeahlerA + moving;
                         }
                         else if(zeahlerA+moving==10){
-                            feld[0][6]='A';
-                            feld[4-(zeahlerA-4)][4]='+';
+                            feld[0][6]=s.getPlayerInitial();
+                            feld[4-(zeahlerA-4)][4]=markMain;
                             zeahlerA = zeahlerA + moving;
                         }
 
                     }
                     else if(zeahlerA+moving>10&&zeahlerA+moving<=14){
-                        feld[zeahlerA-8+(moving-2)][6]='A';
-                        feld[4-(zeahlerA-4)][4]='+';
+                        feld[zeahlerA-8+(moving-2)][6]=s.getPlayerInitial();
+                        feld[4-(zeahlerA-4)][4]=markMain;
                         zeahlerA = zeahlerA + moving;
                     }
 
                 }
                 else if(zeahlerA==9){
                     if(zeahlerA+moving==10){
-                        feld[0][6]='A';
-                        feld[0][5]='+';
+                        feld[0][6]=s.getPlayerInitial();
+                        feld[0][5]=markMain;
                         zeahlerA = zeahlerA + moving;
                     }
                     else if(zeahlerA+moving>10&&zeahlerA+moving<=14){
-                        feld[moving-1][6]='A';
-                        feld[0][5]='+';
+                        feld[moving-1][6]=s.getPlayerInitial();
+                        feld[0][5]=markMain;
                         zeahlerA = zeahlerA + moving;
                     }
                     else if(zeahlerA+moving==15){
-                        feld[4][7]='A';
-                        feld[0][5]='+';
+                        feld[4][7]=s.getPlayerInitial();
+                        feld[0][5]=markMain;
                         zeahlerA = zeahlerA + moving;
                     }
 
@@ -254,84 +266,90 @@ public class FeldMaDn extends Feld{
                 }
                 else if(zeahlerA>=10&&zeahlerA<14){
                     if(zeahlerA+moving<=14){
-                        feld[zeahlerA-10+moving][6]='A';
-                        feld[zeahlerA-10][6]='+';
+                        feld[zeahlerA-10+moving][6]=s.getPlayerInitial();
+                        feld[zeahlerA-10][6]=markMain;
                         zeahlerA = zeahlerA+moving;
                     }
                     else if(zeahlerA+moving>14&&zeahlerA+moving<=18){
-                        feld[4][6+zeahlerA-14+moving]='A';
-                        feld[zeahlerA-10][6]='+';
+                        feld[4][6+zeahlerA-14+moving]=s.getPlayerInitial();
+                        feld[zeahlerA-10][6]=markMain;
                         zeahlerA=zeahlerA+moving;
                     }
                     else if(zeahlerA+moving==19){
-                        feld[5][10]='A';
-                        feld[3][6]='+';
+                        feld[5][10]=s.getPlayerInitial();
+                        feld[3][6]=markMain;
                         zeahlerA=zeahlerA+moving;
                     }
                 }
                 else if(zeahlerA>=14&&zeahlerA<=18){
-                    if(zeahlerA+moving<=18){
-                        feld[4][5+zeahlerA-13+moving]='A';
-                        feld[4][5+zeahlerA-13]='+';
+                    if(s.getPlayerInitial()=='B' && zeahlerA+moving<=20){
+                        int in = (zeahlerA+moving)-20;
+                        feld[5][9-in]=s.getPlayerInitial();
+                        feld[4][5+(zeahlerA-14)]=markMain;
+                        zeahlerA=in+60;
+                    }
+                    else if(zeahlerA+moving<=18){
+                        feld[4][5+zeahlerA-13+moving]=s.getPlayerInitial();
+                        feld[4][5+zeahlerA-13]=markMain;
                         zeahlerA = zeahlerA+moving;
                     }
                     else if(zeahlerA+moving>=18&&zeahlerA+moving<=20){
                         if(zeahlerA+moving==18){
-                            feld[10][4]='A';
+                            feld[10][4]=s.getPlayerInitial();
                         }
                         else if(zeahlerA+moving==19){
-                            feld[5][10]='A';
+                            feld[5][10]=s.getPlayerInitial();
                         }
                         else if(zeahlerA+moving==20){
-                            feld[6][10]='A';
+                            feld[6][10]=s.getPlayerInitial();
                         }
-                        feld[4][5+zeahlerA-13]='+';
+                        feld[4][5+zeahlerA-13]=markMain;
                         zeahlerA=zeahlerA+moving;
                     }
                     else if(zeahlerA+moving>20&&zeahlerA+moving<=24){
-                        feld[6][10-(zeahlerA-18+moving-2)]='A';
-                        feld[4][5+zeahlerA-13]='+';
+                        feld[6][10-(zeahlerA-18+moving-2)]=s.getPlayerInitial();
+                        feld[4][5+zeahlerA-13]=markMain;
                         zeahlerA=zeahlerA+moving;
                     }
 
                 }
                 else if(zeahlerA>18&&zeahlerA<=20){
                     if(zeahlerA+moving==20){
-                        feld[6][10]='A';
-                        feld[5][10]='+';
+                        feld[6][10]=s.getPlayerInitial();
+                        feld[5][10]=markMain;
                         zeahlerA=zeahlerA+moving;
                     }
                     else if(zeahlerA+moving>20&&zeahlerA+moving<=24){
-                        feld[6][10-moving+(20-zeahlerA)]='A';
-                        feld[4+(zeahlerA-18)][10]='+';
+                        feld[6][10-moving+(20-zeahlerA)]=s.getPlayerInitial();
+                        feld[4+(zeahlerA-18)][10]=markMain;
                         zeahlerA=zeahlerA+moving;
                     }
                     else if(zeahlerA+moving>24){
-                        feld[4+(moving-4)][6]='A';
-                        feld[4+(zeahlerA-18)][10]='+';
+                        feld[4+(moving-4)][6]=s.getPlayerInitial();
+                        feld[4+(zeahlerA-18)][10]=markMain;
                         zeahlerA=zeahlerA+moving;
                     }
                 }
                 else if(zeahlerA>20&&zeahlerA<=24){
                     if(zeahlerA+moving<=24){
-                        feld[6][10-(zeahlerA-20+moving)]='A';
-                        feld[6][10-(zeahlerA-20)]='+';
+                        feld[6][10-(zeahlerA-20+moving)]=s.getPlayerInitial();
+                        feld[6][10-(zeahlerA-20)]=markMain;
                         zeahlerA = zeahlerA+moving;
 
                     }else if(zeahlerA+moving>24&&zeahlerA+moving<=28){
-                        feld[6+(moving-(24-zeahlerA))][6]='A';
-                        feld[6][10-(zeahlerA-20)]='+';
+                        feld[6+(moving-(24-zeahlerA))][6]=s.getPlayerInitial();
+                        feld[6][10-(zeahlerA-20)]=markMain;
                         zeahlerA = zeahlerA+moving;
                     }
                     else if(zeahlerA+moving>28){
                         if(zeahlerA+moving==29){
-                            feld[10][5]='A';
-                            feld[6][10-(zeahlerA-20)]='+';
+                            feld[10][5]=s.getPlayerInitial();
+                            feld[6][10-(zeahlerA-20)]=markMain;
                             zeahlerA = zeahlerA+moving;
                         }
                         else if(zeahlerA+moving==30){
-                            feld[10][4]='A';
-                            feld[6][10-(zeahlerA-20)]='+';
+                            feld[10][4]=s.getPlayerInitial();
+                            feld[6][10-(zeahlerA-20)]=markMain;
                             zeahlerA = zeahlerA+moving;
                         }
 
@@ -339,59 +357,59 @@ public class FeldMaDn extends Feld{
                 }
                 else if(zeahlerA>24&&zeahlerA<=28){
                     if(zeahlerA+moving<=28){
-                        feld[10-(zeahlerA-20+moving)][6]='A';
-                        feld[6][6+(zeahlerA-24)]='+';
+                        feld[6+(zeahlerA-24+moving)][6]=s.getPlayerInitial();
+                        feld[6][6+(zeahlerA-24)]=markMain;
                         zeahlerA = zeahlerA+moving;
                     }
                     else if(zeahlerA+moving==29){
-                        feld[10][5]='A';
-                        feld[6][6+(zeahlerA-24)]='+';
+                        feld[10][5]=s.getPlayerInitial();
+                        feld[6][6+(zeahlerA-24)]=markMain;
                         zeahlerA = zeahlerA+moving;
                     }
                     else if(zeahlerA+moving>=30 && zeahlerA+moving<=34){
-                        feld[10-(moving-(30-zeahlerA))][4]='A';
-                        feld[6][6+(zeahlerA-24)]='+';
+                        feld[10-(moving-(30-zeahlerA))][4]=s.getPlayerInitial();
+                        feld[6+(zeahlerA-24)][6]=markMain;
                         zeahlerA = zeahlerA+moving;
                     }
                 }
                 else if(zeahlerA==29||zeahlerA==30){
                     if(zeahlerA+moving==30){
-                        feld[10][4]='A';
+                        feld[10][4]=s.getPlayerInitial();
                     }
                     else if(zeahlerA+moving>30&&zeahlerA+moving<=34){
                         if(zeahlerA==29){
-                            feld[10-(moving-(30-zeahlerA))][4]='A';
-                            feld[10][5]='+';
+                            feld[10-(moving-(30-zeahlerA))][4]=s.getPlayerInitial();
+                            feld[10][5]=markMain;
                             zeahlerA = zeahlerA+moving;
                         }
                         else if(zeahlerA==30){
-                            feld[10-(moving-(30-zeahlerA))][4]='A';
-                            feld[10][4]='+';
+                            feld[10-(moving-(30-zeahlerA))][4]=s.getPlayerInitial();
+                            feld[10][4]=markMain;
                             zeahlerA = zeahlerA+moving;
                         }
                     }
                     else if(zeahlerA+moving==35){
                         if(zeahlerA==29){
-                            feld[6][3]='A';
-                            feld[10][5]='+';
+                            feld[6][3]=s.getPlayerInitial();
+                            feld[10][5]=markMain;
                             zeahlerA = zeahlerA+moving;
                         }
                         else if(zeahlerA==30){
-                            feld[6][3]='A';
-                            feld[10][4]='+';
+                            feld[6][3]=s.getPlayerInitial();
+                            feld[10][4]=markMain;
                             zeahlerA = zeahlerA+moving;
                         }
 
                     }
                     else if(zeahlerA+moving==36){
                         if(zeahlerA==29){
-                            feld[6][2]='A';
-                            feld[10][5]='+';
+                            feld[6][2]=s.getPlayerInitial();
+                            feld[10][5]=markMain;
                             zeahlerA = zeahlerA+moving;
                         }
                         else if(zeahlerA==30){
-                            feld[6][2]='A';
-                            feld[10][4]='+';
+                            feld[6][2]=s.getPlayerInitial();
+                            feld[10][4]=markMain;
                             zeahlerA = zeahlerA+moving;
                         }
 
@@ -400,68 +418,116 @@ public class FeldMaDn extends Feld{
                 }
                 else if(zeahlerA>30&&zeahlerA<=34){
                     if(zeahlerA+moving<=34){
-                        feld[10-(moving-(30-zeahlerA))][4]='A';
-                        feld[6+(34-zeahlerA)][4]='+';
+                        feld[10-(moving-(30-zeahlerA))][4]=s.getPlayerInitial();
+                        feld[6+(34-zeahlerA)][4]=markMain;
                         zeahlerA=zeahlerA+moving;
                     }
                     else if(zeahlerA+moving>34&&zeahlerA+moving<=38){
-                        feld[6][4-(moving-(34-zeahlerA))]='A';
-                        feld[6+(34-zeahlerA)][4]='+';
+                        feld[6][4-(moving-(34-zeahlerA))]=s.getPlayerInitial();
+                        feld[6+(34-zeahlerA)][4]=markMain;
                         zeahlerA=zeahlerA+moving;
                     }
                     else if(zeahlerA+moving==39){
-                        feld[5][0]='A';
-                        feld[6+(34-zeahlerA)][4]='+';
+                        feld[5][0]=s.getPlayerInitial();
+                        feld[6+(34-zeahlerA)][4]=markMain;
                         zeahlerA=zeahlerA+moving;
                     }
                     else if(zeahlerA+moving>=40 && zeahlerA+moving<=43) {
-                        feld[1 + (zeahlerA + moving - 40)][5] = 'A';
-                        feld[4][6] = '+';
-                        zeahlerA = zeahlerA + moving;
+                        if(s.getPlayerInitial()=='A') {
+                            feld[1 + (zeahlerA + moving - 40)][5] = s.getPlayerInitial();
+                            feld[4][6] = markMain;
+                            zeahlerA = zeahlerA + moving;
+                        }
+                        else if(s.getPlayerInitial()=='B'){
+                            feld[0][4] = s.getPlayerInitial();
+                            feld[4][6] = markMain;
+                            zeahlerA = zeahlerA + moving;
+                            zeahlerA=zeahlerA-40;
+                        }
                     }
 
                 }
                 else if(zeahlerA>34&&zeahlerA<=38){
                     if(zeahlerA+moving<=38){
-                        feld[6][4-(moving-(34-zeahlerA))]='A';
-                        feld[6][38-zeahlerA]='+';
+                        feld[6][4-(moving-(34-zeahlerA))]=s.getPlayerInitial();
+                        feld[6][38-zeahlerA]=markMain;
                         zeahlerA=zeahlerA+moving;
                     }
                     else if(zeahlerA+moving==39){
-                        feld[5][0]='A';
-                        feld[6][38-zeahlerA]='+';
+                        feld[5][0]=s.getPlayerInitial();
+                        feld[6][38-zeahlerA]=markMain;
                         zeahlerA=zeahlerA+moving;
                     }
                     else if(zeahlerA+moving>=40 && zeahlerA+moving<=43) {
-                        feld[5][moving-(39-zeahlerA)] = 'A';
-                        feld[6][38-zeahlerA]='+';
-                        zeahlerA = zeahlerA + moving;
+                        if(s.getPlayerInitial()=='A') {
+                            feld[5][moving - (39 - zeahlerA)] = s.getPlayerInitial();
+                            feld[6][38 - zeahlerA] = markMain;
+                            zeahlerA = zeahlerA + moving;
+                        }
+                        else if(s.getPlayerInitial()=='B'){
+                            feld[6][38-zeahlerA]=markMain;
+                            zeahlerA = zeahlerA + moving;
+                            zeahlerA=zeahlerA-40;
+                            feld[4][zeahlerA] = s.getPlayerInitial();
+
+                        }
                     }
 
                 }
                 else if(zeahlerA==39){
                     if(zeahlerA+moving>=40 && zeahlerA+moving<=43) {
-                        feld[5][moving] = 'A';
-                        feld[5][0] = '+';
-                        zeahlerA = zeahlerA + moving;
+                        if(s.getPlayerInitial()=='A'){
+                            feld[5][moving] = s.getPlayerInitial();
+                            feld[5][0] = markMain;
+                            zeahlerA = zeahlerA + moving;
+                        }
+                        else if(s.getPlayerInitial()=='B'){
+                            feld[5][0] = markMain;
+                            zeahlerA = zeahlerA + moving;
+                            zeahlerA=zeahlerA-40;
+                            feld[4][zeahlerA] = s.getPlayerInitial();
+                        }
                     }
+                    else if(zeahlerA+moving>=44&&s.getPlayerInitial()=='B'){
+                        feld[5][0] = markMain;
+                        zeahlerA = zeahlerA + moving;
+                        zeahlerA=zeahlerA-40;
+                        feld[4][zeahlerA] = s.getPlayerInitial();
+                    }
+                    else if(zeahlerA+moving==45&&s.getPlayerInitial()=='B'){
+                        feld[5][0] = markMain;
+                        zeahlerA = zeahlerA + moving;
+                        zeahlerA=zeahlerA-40;
+                        feld[3][4] = s.getPlayerInitial();
+                    }
+
                 }
-                else if(zeahlerA>=40&&zeahlerA<=43){
+                else if((zeahlerA>=40&&zeahlerA<=43) && s.getPlayerInitial()=='A'){
                     if(zeahlerA+moving<=34){
-                        feld[5][zeahlerA-39+moving] = 'A';
-                        feld[5][zeahlerA-39] = '+';
+                        feld[5][zeahlerA-39+moving] = s.getPlayerInitial();
+                        feld[5][zeahlerA-39] = markMain;
                         zeahlerA = zeahlerA + moving;
                     }
                     else{
-                        System.out.println("Runde ist aus");
+                        System.out.println("Runde ist aus - A hat gewonnen");
+                    }
+                }
+                else if(zeahlerA>=60 && s.getPlayerInitial()=='B'){
+                    if(zeahlerA+moving<=63) {
+                        int temp = zeahlerA - 60;
+                        feld[5][9 - (temp + moving)] = s.getPlayerInitial();
+                        feld[5][9 - temp] = markEnd;
+                        zeahlerA = zeahlerA + moving;
+                    }
+                    else{
+                        System.out.println("Runde ist aus - B hat gewonnen");
                     }
                 }
 
 
                 outField();
 
-                test++;
-            }while(test<35);
+
         }
     }
 
