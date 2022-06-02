@@ -1,4 +1,4 @@
-package com.example.madn;
+/*package com.example.madn;
 
 public class Stein {
 
@@ -32,4 +32,4 @@ public class Stein {
     public void setCounter(int count) {
         this.counter = count;
     }
-}
+}*/
