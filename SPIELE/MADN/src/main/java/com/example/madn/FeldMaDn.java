@@ -18,6 +18,8 @@ public class FeldMaDn extends Feld {
     boolean needtomove = false;
     private int grenzeA = 43;
     private int grenzeB = 63;
+    protected int x;
+    protected int y;
 
 
     public FeldMaDn(char markM, char markH, char markE) {
