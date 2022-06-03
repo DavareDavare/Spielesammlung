@@ -16,6 +16,7 @@ public class HelloController {
 
 
     public void initialize() {
+
         FeldMaDn spielfeld = new FeldMaDn('+', ' ', ' ');
         spielfeld.fillField();
         spielfeld.fillHome();
