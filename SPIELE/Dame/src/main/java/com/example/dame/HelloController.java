@@ -239,13 +239,13 @@ public class HelloController{
 
     public void play(Button button)
     {
+        fillText();
         field1.checkOP();
+        fillText();
         if(temp==0)
         {
             setXY(button);
             field1.fm();
-            System.out.println("test1");
-
         }
         if(temp == 1)
         {
@@ -254,6 +254,7 @@ public class HelloController{
             if (field1.field[(int) field1.y - 'A'][field1.x] == field1.steine[0] || field1.field[(int) field1.y - 'A'][field1.x] == field1.steine[1]) {
                 if(field1.smn())
                 {
+                    fillText();
                     System.out.println(field1.getX() + " " + (int)(field1.getY()-65));
                     System.out.println(field1.field[field1.getX()][(field1.getY()-65)]);
                     System.out.println(field1.getAt(field1.getX(), (field1.getY()-65)));
@@ -283,12 +284,7 @@ public class HelloController{
                 }
             }
         }
-
-
-
-
     }
-
 
     public void inputStart()
     {
@@ -494,8 +490,6 @@ public class HelloController{
         playbutton.setOpacity(0);
         playpane.setDisable(true);
         playpane.setOpacity(0);
-        r.setDisable(true);
-        r.setOpacity(0);
         field1.fill();
         field1.placePlayerStones();
         grid1.setDisable(false);

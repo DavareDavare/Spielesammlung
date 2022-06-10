@@ -21,6 +21,7 @@ public class Feld {
         steine = spielsteine;
     }
 
+    //Die ganze Fläche wird mit Hintergrund gefüllt
     public void fill()
     {
         int z=0;
@@ -34,7 +35,7 @@ public class Feld {
         }
     }
 
-
+    //gibt Feld aus
     public void output()
     {
         System.out.println();
@@ -72,6 +73,7 @@ public class Feld {
         System.out.println("Aktueller Spieler: " + currPlayer);
     }
 
+    //Ersetzt Hintergrund mit den Playerstones
     public void placePlayerStones()
     {
         for(int j=0; j<8; j++)
@@ -80,6 +82,7 @@ public class Feld {
             {
                 if(j<3)
                 {
+                    //Abwechselnd paltzieren
                     if(j%2 == 1)
                     {
                         if(h%2 == 0)
@@ -92,6 +95,7 @@ public class Feld {
                             field[j][h] = steine[0];
                         }
                     }
+                    //Für Spieler 2
                 } else if ( j>4)
                 {
                     if(j%2 == 1)
