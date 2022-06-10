@@ -12,3 +12,7 @@ public abstract class Feld {
     }
 
 }
+
+/*
+    Basic Klasse für das Feld - nichts Besonderes
+*/
